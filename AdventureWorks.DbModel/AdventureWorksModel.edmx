@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AdventureWorksModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductNumber" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="MakeFlag" Type="bit" Nullable="false" />
+          <Property Name="FinishedGoodsFlag" Type="bit" Nullable="false" />
+          <Property Name="Color" Type="nvarchar" MaxLength="15" />
+          <Property Name="SafetyStockLevel" Type="smallint" Nullable="false" />
+          <Property Name="ReorderPoint" Type="smallint" Nullable="false" />
+          <Property Name="StandardCost" Type="money" Nullable="false" />
+          <Property Name="ListPrice" Type="money" Nullable="false" />
+          <Property Name="Size" Type="nvarchar" MaxLength="5" />
+          <Property Name="SizeUnitMeasureCode" Type="nchar" MaxLength="3" />
+          <Property Name="WeightUnitMeasureCode" Type="nchar" MaxLength="3" />
+          <Property Name="Weight" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="DaysToManufacture" Type="int" Nullable="false" />
+          <Property Name="ProductLine" Type="nchar" MaxLength="2" />
+          <Property Name="Class" Type="nchar" MaxLength="2" />
+          <Property Name="Style" Type="nchar" MaxLength="2" />
+          <Property Name="ProductSubcategoryID" Type="int" />
+          <Property Name="ProductModelID" Type="int" />
+          <Property Name="SellStartDate" Type="datetime" Nullable="false" />
+          <Property Name="SellEndDate" Type="datetime" />
+          <Property Name="DiscontinuedDate" Type="datetime" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="ProductCategoryID" />
+          </Key>
+          <Property Name="ProductCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductModel">
+          <Key>
+            <PropertyRef Name="ProductModelID" />
+          </Key>
+          <Property Name="ProductModelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CatalogDescription" Type="xml" />
+          <Property Name="Instructions" Type="xml" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductSubcategory">
+          <Key>
+            <PropertyRef Name="ProductSubcategoryID" />
+          </Key>
+          <Property Name="ProductSubcategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductCategoryID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="rowguid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UnitMeasure">
+          <Key>
+            <PropertyRef Name="UnitMeasureCode" />
+          </Key>
+          <Property Name="UnitMeasureCode" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Product_ProductModel_ProductModelID">
+          <End Role="ProductModel" Type="Self.ProductModel" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductModel">
+              <PropertyRef Name="ProductModelID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductSubcategory_ProductSubcategoryID">
+          <End Role="ProductSubcategory" Type="Self.ProductSubcategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSubcategory">
+              <PropertyRef Name="ProductSubcategoryID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductSubcategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_UnitMeasure_SizeUnitMeasureCode">
+          <End Role="UnitMeasure" Type="Self.UnitMeasure" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitMeasure">
+              <PropertyRef Name="UnitMeasureCode" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SizeUnitMeasureCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_UnitMeasure_WeightUnitMeasureCode">
+          <End Role="UnitMeasure" Type="Self.UnitMeasure" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitMeasure">
+              <PropertyRef Name="UnitMeasureCode" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="WeightUnitMeasureCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSubcategory_ProductCategory_ProductCategoryID">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
+          <End Role="ProductSubcategory" Type="Self.ProductSubcategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="ProductCategoryID" />
+            </Principal>
+            <Dependent Role="ProductSubcategory">
+              <PropertyRef Name="ProductCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="uspUpdateEmployeeHireInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HumanResources">
+          <Parameter Name="BusinessEntityID" Type="int" Mode="In" />
+          <Parameter Name="JobTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="HireDate" Type="datetime" Mode="In" />
+          <Parameter Name="RateChangeDate" Type="datetime" Mode="In" />
+          <Parameter Name="Rate" Type="money" Mode="In" />
+          <Parameter Name="PayFrequency" Type="tinyint" Mode="In" />
+          <Parameter Name="CurrentFlag" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="uspUpdateEmployeeLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HumanResources">
+          <Parameter Name="BusinessEntityID" Type="int" Mode="In" />
+          <Parameter Name="LoginID" Type="nvarchar" Mode="In" />
+          <Parameter Name="JobTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="HireDate" Type="datetime" Mode="In" />
+          <Parameter Name="CurrentFlag" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="uspUpdateEmployeePersonalInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="HumanResources">
+          <Parameter Name="BusinessEntityID" Type="int" Mode="In" />
+          <Parameter Name="NationalIDNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="BirthDate" Type="datetime" Mode="In" />
+          <Parameter Name="MaritalStatus" Type="nchar" Mode="In" />
+          <Parameter Name="Gender" Type="nchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="AdventureWorksModelStoreContainer">
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="Production" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="Production" store:Type="Tables" />
+          <EntitySet Name="ProductModel" EntityType="Self.ProductModel" Schema="Production" store:Type="Tables" />
+          <EntitySet Name="ProductSubcategory" EntityType="Self.ProductSubcategory" Schema="Production" store:Type="Tables" />
+          <EntitySet Name="UnitMeasure" EntityType="Self.UnitMeasure" Schema="Production" store:Type="Tables" />
+          <AssociationSet Name="FK_Product_ProductModel_ProductModelID" Association="Self.FK_Product_ProductModel_ProductModelID">
+            <End Role="ProductModel" EntitySet="ProductModel" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductSubcategory_ProductSubcategoryID" Association="Self.FK_Product_ProductSubcategory_ProductSubcategoryID">
+            <End Role="ProductSubcategory" EntitySet="ProductSubcategory" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_UnitMeasure_SizeUnitMeasureCode" Association="Self.FK_Product_UnitMeasure_SizeUnitMeasureCode">
+            <End Role="UnitMeasure" EntitySet="UnitMeasure" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_UnitMeasure_WeightUnitMeasureCode" Association="Self.FK_Product_UnitMeasure_WeightUnitMeasureCode">
+            <End Role="UnitMeasure" EntitySet="UnitMeasure" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSubcategory_ProductCategory_ProductCategoryID" Association="Self.FK_ProductSubcategory_ProductCategory_ProductCategoryID">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="ProductSubcategory" EntitySet="ProductSubcategory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AdventureWorksModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="uspUpdateEmployeeHireInfo">
+            <Parameter Name="BusinessEntityID" Mode="In" Type="Int32" />
+            <Parameter Name="JobTitle" Mode="In" Type="String" />
+            <Parameter Name="HireDate" Mode="In" Type="DateTime" />
+            <Parameter Name="RateChangeDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Rate" Mode="In" Type="Decimal" />
+            <Parameter Name="PayFrequency" Mode="In" Type="Byte" />
+            <Parameter Name="CurrentFlag" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="uspUpdateEmployeeLogin">
+            <Parameter Name="BusinessEntityID" Mode="In" Type="Int32" />
+            <Parameter Name="LoginID" Mode="In" Type="String" />
+            <Parameter Name="JobTitle" Mode="In" Type="String" />
+            <Parameter Name="HireDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CurrentFlag" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="uspUpdateEmployeePersonalInfo">
+            <Parameter Name="BusinessEntityID" Mode="In" Type="Int32" />
+            <Parameter Name="NationalIDNumber" Mode="In" Type="String" />
+            <Parameter Name="BirthDate" Mode="In" Type="DateTime" />
+            <Parameter Name="MaritalStatus" Mode="In" Type="String" />
+            <Parameter Name="Gender" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Products" EntityType="AdventureWorksModel.Product" />
+          <EntitySet Name="ProductModels" EntityType="AdventureWorksModel.ProductModel" />
+          <EntitySet Name="ProductSubcategories" EntityType="AdventureWorksModel.ProductSubcategory" />
+          <EntitySet Name="UnitMeasures" EntityType="AdventureWorksModel.UnitMeasure" />
+          <AssociationSet Name="FK_Product_ProductModel_ProductModelID" Association="AdventureWorksModel.FK_Product_ProductModel_ProductModelID">
+            <End Role="ProductModel" EntitySet="ProductModels" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductSubcategory_ProductSubcategoryID" Association="AdventureWorksModel.FK_Product_ProductSubcategory_ProductSubcategoryID">
+            <End Role="ProductSubcategory" EntitySet="ProductSubcategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_UnitMeasure_SizeUnitMeasureCode" Association="AdventureWorksModel.FK_Product_UnitMeasure_SizeUnitMeasureCode">
+            <End Role="UnitMeasure" EntitySet="UnitMeasures" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_UnitMeasure_WeightUnitMeasureCode" Association="AdventureWorksModel.FK_Product_UnitMeasure_WeightUnitMeasureCode">
+            <End Role="UnitMeasure" EntitySet="UnitMeasures" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <EntitySet Name="ProductCategories" EntityType="AdventureWorksModel.ProductCategory" />
+          <AssociationSet Name="FK_ProductSubcategory_ProductCategory_ProductCategoryID" Association="AdventureWorksModel.FK_ProductSubcategory_ProductCategory_ProductCategoryID">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="ProductSubcategory" EntitySet="ProductSubcategories" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductNumber" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="MakeFlag" Type="Boolean" Nullable="false" />
+          <Property Name="FinishedGoodsFlag" Type="Boolean" Nullable="false" />
+          <Property Name="Color" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="SafetyStockLevel" Type="Int16" Nullable="false" />
+          <Property Name="ReorderPoint" Type="Int16" Nullable="false" />
+          <Property Name="StandardCost" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="ListPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Size" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="SizeUnitMeasureCode" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="WeightUnitMeasureCode" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="Weight" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="DaysToManufacture" Type="Int32" Nullable="false" />
+          <Property Name="ProductLine" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="Class" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="Style" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="ProductSubcategoryID" Type="Int32" />
+          <Property Name="ProductModelID" Type="Int32" />
+          <Property Name="SellStartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SellEndDate" Type="DateTime" Precision="3" />
+          <Property Name="DiscontinuedDate" Type="DateTime" Precision="3" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ProductModel" Relationship="AdventureWorksModel.FK_Product_ProductModel_ProductModelID" FromRole="Product" ToRole="ProductModel" />
+          <NavigationProperty Name="ProductSubcategory" Relationship="AdventureWorksModel.FK_Product_ProductSubcategory_ProductSubcategoryID" FromRole="Product" ToRole="ProductSubcategory" />
+          <NavigationProperty Name="UnitMeasure" Relationship="AdventureWorksModel.FK_Product_UnitMeasure_SizeUnitMeasureCode" FromRole="Product" ToRole="UnitMeasure" />
+          <NavigationProperty Name="UnitMeasure1" Relationship="AdventureWorksModel.FK_Product_UnitMeasure_WeightUnitMeasureCode" FromRole="Product" ToRole="UnitMeasure" />
+        </EntityType>
+        <EntityType Name="ProductModel">
+          <Key>
+            <PropertyRef Name="ProductModelID" />
+          </Key>
+          <Property Name="ProductModelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CatalogDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Instructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Products" Relationship="AdventureWorksModel.FK_Product_ProductModel_ProductModelID" FromRole="ProductModel" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductSubcategory">
+          <Key>
+            <PropertyRef Name="ProductSubcategoryID" />
+          </Key>
+          <Property Name="ProductSubcategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Products" Relationship="AdventureWorksModel.FK_Product_ProductSubcategory_ProductSubcategoryID" FromRole="ProductSubcategory" ToRole="Product" />
+          <NavigationProperty Name="ProductCategory" Relationship="AdventureWorksModel.FK_ProductSubcategory_ProductCategory_ProductCategoryID" FromRole="ProductSubcategory" ToRole="ProductCategory" />
+        </EntityType>
+        <EntityType Name="UnitMeasure">
+          <Key>
+            <PropertyRef Name="UnitMeasureCode" />
+          </Key>
+          <Property Name="UnitMeasureCode" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Products" Relationship="AdventureWorksModel.FK_Product_UnitMeasure_SizeUnitMeasureCode" FromRole="UnitMeasure" ToRole="Product" />
+          <NavigationProperty Name="Products1" Relationship="AdventureWorksModel.FK_Product_UnitMeasure_WeightUnitMeasureCode" FromRole="UnitMeasure" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Product_ProductModel_ProductModelID">
+          <End Type="AdventureWorksModel.ProductModel" Role="ProductModel" Multiplicity="0..1" />
+          <End Type="AdventureWorksModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductModel">
+              <PropertyRef Name="ProductModelID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductSubcategory_ProductSubcategoryID">
+          <End Type="AdventureWorksModel.ProductSubcategory" Role="ProductSubcategory" Multiplicity="0..1" />
+          <End Type="AdventureWorksModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSubcategory">
+              <PropertyRef Name="ProductSubcategoryID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductSubcategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_UnitMeasure_SizeUnitMeasureCode">
+          <End Type="AdventureWorksModel.UnitMeasure" Role="UnitMeasure" Multiplicity="0..1" />
+          <End Type="AdventureWorksModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitMeasure">
+              <PropertyRef Name="UnitMeasureCode" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="SizeUnitMeasureCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_UnitMeasure_WeightUnitMeasureCode">
+          <End Type="AdventureWorksModel.UnitMeasure" Role="UnitMeasure" Multiplicity="0..1" />
+          <End Type="AdventureWorksModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitMeasure">
+              <PropertyRef Name="UnitMeasureCode" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="WeightUnitMeasureCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="ProductCategoryID" />
+          </Key>
+          <Property Name="ProductCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rowguid" Type="Guid" Nullable="false" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ProductSubcategories" Relationship="AdventureWorksModel.FK_ProductSubcategory_ProductCategory_ProductCategoryID" FromRole="ProductCategory" ToRole="ProductSubcategory" />
+        </EntityType>
+        <Association Name="FK_ProductSubcategory_ProductCategory_ProductCategoryID">
+          <End Type="AdventureWorksModel.ProductCategory" Role="ProductCategory" Multiplicity="1" />
+          <End Type="AdventureWorksModel.ProductSubcategory" Role="ProductSubcategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="ProductCategoryID" />
+            </Principal>
+            <Dependent Role="ProductSubcategory">
+              <PropertyRef Name="ProductCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AdventureWorksModelStoreContainer" CdmEntityContainer="Entities">
+          <FunctionImportMapping FunctionImportName="uspUpdateEmployeeHireInfo" FunctionName="AdventureWorksModel.Store.uspUpdateEmployeeHireInfo" />
+          <FunctionImportMapping FunctionImportName="uspUpdateEmployeeLogin" FunctionName="AdventureWorksModel.Store.uspUpdateEmployeeLogin" />
+          <FunctionImportMapping FunctionImportName="uspUpdateEmployeePersonalInfo" FunctionName="AdventureWorksModel.Store.uspUpdateEmployeePersonalInfo" />
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="AdventureWorksModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="DiscontinuedDate" ColumnName="DiscontinuedDate" />
+                <ScalarProperty Name="SellEndDate" ColumnName="SellEndDate" />
+                <ScalarProperty Name="SellStartDate" ColumnName="SellStartDate" />
+                <ScalarProperty Name="ProductModelID" ColumnName="ProductModelID" />
+                <ScalarProperty Name="ProductSubcategoryID" ColumnName="ProductSubcategoryID" />
+                <ScalarProperty Name="Style" ColumnName="Style" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="ProductLine" ColumnName="ProductLine" />
+                <ScalarProperty Name="DaysToManufacture" ColumnName="DaysToManufacture" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="WeightUnitMeasureCode" ColumnName="WeightUnitMeasureCode" />
+                <ScalarProperty Name="SizeUnitMeasureCode" ColumnName="SizeUnitMeasureCode" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="ListPrice" ColumnName="ListPrice" />
+                <ScalarProperty Name="StandardCost" ColumnName="StandardCost" />
+                <ScalarProperty Name="ReorderPoint" ColumnName="ReorderPoint" />
+                <ScalarProperty Name="SafetyStockLevel" ColumnName="SafetyStockLevel" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="FinishedGoodsFlag" ColumnName="FinishedGoodsFlag" />
+                <ScalarProperty Name="MakeFlag" ColumnName="MakeFlag" />
+                <ScalarProperty Name="ProductNumber" ColumnName="ProductNumber" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductModels">
+            <EntityTypeMapping TypeName="AdventureWorksModel.ProductModel">
+              <MappingFragment StoreEntitySet="ProductModel">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="Instructions" ColumnName="Instructions" />
+                <ScalarProperty Name="CatalogDescription" ColumnName="CatalogDescription" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductModelID" ColumnName="ProductModelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSubcategories">
+            <EntityTypeMapping TypeName="AdventureWorksModel.ProductSubcategory">
+              <MappingFragment StoreEntitySet="ProductSubcategory">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
+                <ScalarProperty Name="ProductSubcategoryID" ColumnName="ProductSubcategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitMeasures">
+            <EntityTypeMapping TypeName="AdventureWorksModel.UnitMeasure">
+              <MappingFragment StoreEntitySet="UnitMeasure">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UnitMeasureCode" ColumnName="UnitMeasureCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="AdventureWorksModel.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="rowguid" ColumnName="rowguid" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductCategoryID" ColumnName="ProductCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

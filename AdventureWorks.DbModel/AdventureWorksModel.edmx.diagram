@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7ee9cf86623d4c0e913bc7287a8986b9" Name="Diagram1">
+        <EntityTypeShape EntityType="AdventureWorksModel.Product" Width="1.5" PointX="14.625" PointY="2.125" />
+        <EntityTypeShape EntityType="AdventureWorksModel.ProductModel" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AdventureWorksModel.ProductSubcategory" Width="1.5" PointX="12.375" PointY="7.875" />
+        <EntityTypeShape EntityType="AdventureWorksModel.UnitMeasure" Width="1.5" PointX="12.375" PointY="4.375" />
+        <AssociationConnector Association="AdventureWorksModel.FK_Product_ProductModel_ProductModelID" />
+        <AssociationConnector Association="AdventureWorksModel.FK_Product_ProductSubcategory_ProductSubcategoryID" />
+        <AssociationConnector Association="AdventureWorksModel.FK_Product_UnitMeasure_SizeUnitMeasureCode" />
+        <AssociationConnector Association="AdventureWorksModel.FK_Product_UnitMeasure_WeightUnitMeasureCode" />
+        <EntityTypeShape EntityType="AdventureWorksModel.ProductCategory" Width="1.5" PointX="10.125" PointY="8.125" />
+        <AssociationConnector Association="AdventureWorksModel.FK_ProductSubcategory_ProductCategory_ProductCategoryID" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
