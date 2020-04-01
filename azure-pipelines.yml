@@ -40,11 +40,10 @@ steps:
     tarCompression: 'gz' # Optional. Options: gz, bz2, xz, none
     archiveFile: '$(System.DefaultWorkingDirectory)/$(Build.BuildId).zip' 
     replaceExistingArchive: true 
-
 - task: GitHubRelease@1
   inputs:
-    gitHubConnection: 'widewise'
-    repositoryName: '$(Build.Repository.Name)'
+    gitHubConnection: 'github.com_widewise'
+    repositoryName: 'widewise/AdventureWorks'
     action: 'create'
     target: '$(Build.SourceVersion)'
     tagSource: 'gitTag'
