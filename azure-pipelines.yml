@@ -43,6 +43,7 @@ steps:
 
 - task: GitHubRelease@1
   inputs:
+    gitHubConnection: 'widewise'
     repositoryName: '$(Build.Repository.Name)'
     action: 'create'
     target: '$(Build.SourceVersion)'
