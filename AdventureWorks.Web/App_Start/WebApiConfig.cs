@@ -11,6 +11,9 @@ namespace AdventureWorks.Web
         {
             // Web API configuration and services
 
+            // using Microsoft.Extension.DependencyInjection here.
+            Startup.Bootstrapper(config);
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 
